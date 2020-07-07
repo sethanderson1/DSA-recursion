@@ -353,14 +353,75 @@ function mazeSolver(maze, m, n, path) {
 
 
 
-const labyrinth = [
-        [' ', ' ', ' ', '*', ' ', ' ', ' '],
-        ['*', '*', ' ', '*', ' ', '*', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', '*', '*', '*', '*', '*', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', 'e']
-    ];
-const maze = function(labyrinth, position=0, row, col, direction='S',path){
+// const labyrinth = [
+//         [' ', ' ', ' ', '*', ' ', ' ', ' '],
+//         ['*', '*', ' ', '*', ' ', '*', ' '],
+//         [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+//         [' ', '*', '*', '*', '*', '*', ' '],
+//         [' ', ' ', ' ', ' ', ' ', ' ', 'e']
+//     ];
+// const maze = function(labyrinth, position=0, row, col, direction='S',path){
+//     if(col<0 || row < 0){
+//         return;
+//     }
+//     if(col>=labyrinth[0].length || row>=labyrinth.length){
+//         return;
+//     }
+   
+//     path[position] = direction;
+//     console.log('position', position)
+//     console.log('path[position]', path[position])
+//     position++;
+
+//     if (labyrinth[row][col] === 'e'){
+//         PrintPath(path, 1, position - 1);
+//         console.log('position - 1', position - 1)
+//         return;
+//     }
+//     if (labyrinth[row][col] === ' ') {
+//         // The current cell is free. Mark it as visited
+//         labyrinth[row][col] = 's';
+//         // Invoke recursion to explore all possible directions
+//         maze(labyrinth,position,row, col - 1, 'L',path); // left
+//         maze(labyrinth,position,row - 1, col, 'U',path); // up
+//         maze(labyrinth,position,row, col + 1, 'R',path); // right
+//         maze(labyrinth,position,row + 1, col, 'D',path); // down
+//         // Mark back the current cell as free
+//         //lab[row][col] = ' ';
+//     }
+//     // Remove the last direction from the path
+//     position--;
+
+// }
+// const PrintPath = function (path, startPos, endPos){
+//     console.log('Found path to the exit: ');
+//     console.log(path);
+// }
+
+
+// maze(labyrinth,0,0,0,'s',[])
+
+
+
+
+
+
+
+
+
+let maze = [
+    [' ', ' ', ' ', '*', ' ', ' ', ' '],
+    ['*', '*', ' ', '*', ' ', '*', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', '*', '*', '*', '*', '*', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', 'e']
+];
+
+const PrintPath = function (path, startPos, endPos){
+    console.log('Found path to the exit: ');
+    console.log(path);
+}
+const mazeAll = function(labyrinth, position=0, row, col, direction='S',path){
     if(col<0 || row < 0){
         return;
     }
@@ -369,37 +430,45 @@ const maze = function(labyrinth, position=0, row, col, direction='S',path){
     }
    
     path[position] = direction;
-    console.log('position', position)
-    console.log('path[position]', path[position])
+    // console.log('path[position]', path[position])
     position++;
 
     if (labyrinth[row][col] === 'e'){
         PrintPath(path, 1, position - 1);
-        console.log('position - 1', position - 1)
         return;
     }
     if (labyrinth[row][col] === ' ') {
         // The current cell is free. Mark it as visited
+        // console.log('labyrinth[row][col]', labyrinth[row][col])
         labyrinth[row][col] = 's';
         // Invoke recursion to explore all possible directions
-        maze(labyrinth,position,row, col - 1, 'L',path); // left
-        maze(labyrinth,position,row - 1, col, 'U',path); // up
-        maze(labyrinth,position,row, col + 1, 'R',path); // right
-        maze(labyrinth,position,row + 1, col, 'D',path); // down
+        mazeAll(labyrinth,position,row, col - 1, 'L',path); // left
+        mazeAll(labyrinth,position,row - 1, col, 'U',path); // up
+        mazeAll(labyrinth,position,row, col + 1, 'R',path); // right
+        mazeAll(labyrinth,position,row + 1, col, 'D',path); // down
         // Mark back the current cell as free
-        //lab[row][col] = ' ';
+        labyrinth[row][col] = ' ';
     }
     // Remove the last direction from the path
     position--;
-
-}
-const PrintPath = function (path, startPos, endPos){
-    console.log('Found path to the exit: ');
-    console.log(path);
 }
 
 
-maze(labyrinth,0,0,0,'s',[])
+// console.log(mazeAll(maze,0,0,0,'S',[]))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -435,29 +504,63 @@ maze(labyrinth,0,0,0,'s',[])
 
 
 
+// function anagrams(prefix, str){
+//     if(str.length <= 1){
+//         console.log(`The anagram is ${prefix}${str}`);
+//     } else {
+//         for(let i=0; i<str.length; i++){
+//             let currentLetter = str.substring(i, i+1); 
+//             console.log('currentLetter', currentLetter)
+//             let previousLetters = str.substring(0,i);
+//             console.log('previousLetters', previousLetters)
+//             let afterLetters = str.substring(i+1);
+//             console.log('afterLetters', afterLetters)
+//             anagrams(prefix+currentLetter, previousLetters+afterLetters);
+//         }
+//     }
+// }
+// function printAnagram(word){
+//     //console.log(`The word for which we will find an anagram is ${word}`);
+//     anagrams(' ', word);
+
+// }
+
+
+// console.log(anagrams('e', 'ast'))
+
+
+
+
+
+
+
+
+
 function anagrams(prefix, str){
     if(str.length <= 1){
         console.log(`The anagram is ${prefix}${str}`);
     } else {
         for(let i=0; i<str.length; i++){
             let currentLetter = str.substring(i, i+1); 
-            console.log('currentLetter', currentLetter)
+            // console.log('currentLetter', currentLetter)
             let previousLetters = str.substring(0,i);
-            console.log('previousLetters', previousLetters)
+            // console.log('previousLetters', previousLetters)
             let afterLetters = str.substring(i+1);
-            console.log('afterLetters', afterLetters)
+            // console.log('afterLetters', afterLetters)
+            // console.log('prefix+currentLetter', prefix+currentLetter)
+            // console.log('previousLetters+afterLetters', previousLetters+afterLetters)
             anagrams(prefix+currentLetter, previousLetters+afterLetters);
         }
     }
 }
 function printAnagram(word){
-    //console.log(`The word for which we will find an anagram is ${word}`);
+    console.log(`The word for which we will find an anagram is ${word}`);
     anagrams(' ', word);
 
 }
 
+console.log(printAnagram('east'))
 
-console.log(anagrams('e', 'ast'))
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
